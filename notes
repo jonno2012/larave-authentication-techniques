@@ -1,0 +1,1 @@
+php artisan make:auth - installs scaffolding for auth. will giev you routes, views etc so you will see login links etc.
