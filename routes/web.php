@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\EmailOnly;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +17,6 @@ use App\Http\Controllers\Auth\EmailOnly;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('login-email-only', [EmailOnly::class, 'login'])->name('login-email-only');
-Route::post('login-email-only', [EmailOnly::class, 'store'])->name('login-email-only');
-Route::get('auth/token/{token:token}', [EmailOnly::class, 'authenticate']);
-
-
 
 Route::get('/dashboard', function () {
 //    return 'You are logged in ' . auth()->user()->name;

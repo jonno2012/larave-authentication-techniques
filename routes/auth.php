@@ -10,6 +10,27 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\EmailOnly;
+use App\Http\Controllers\Auth\AuthWithGitHub;
+use Illuminate\Support\Facades\Auth;
+
+Route::get('login-email-only', [EmailOnly::class, 'login'])->name('login-email-only');
+Route::post('login-email-only', [EmailOnly::class, 'store'])->name('login-email-only');
+Route::get('auth/token/{token:token}', [EmailOnly::class, 'authenticate']);
+
+Route::get('dashboard', function() {
+    return 'You are authorized o see this page';
+})->middleware('gitHubAuth');
+
+Route::get('/auth/github/redirect', [AuthWithGitHub::class, 'redirectToProvider'])->name('github-redirect');
+Route::get('/auth/github/callback', [AuthWithGitHub::class, 'handleProviderCallback']);
+Route::get('logout', function() {
+    Auth::logout();
+    return redirect('/');
+});
+
+// github
+Route::get('auth-with-github', ['AuthWithGithub', 'login']);
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
